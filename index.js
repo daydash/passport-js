@@ -3,7 +3,7 @@ const passport = require("passport");
 const path = require("path");
 const session = require("express-session");
 require("./passportSetup");
-require("dotenv").config()
+require("dotenv").config();
 
 const app = express();
 
@@ -33,7 +33,8 @@ app.use(passport.session());
 const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
-	res.json({ message: "You are not logged in" });
+	if (req.user) res.redirect("/auth/success");
+	else res.send(`<a href="/auth/google">login here</a>`);
 });
 
 app.get(
